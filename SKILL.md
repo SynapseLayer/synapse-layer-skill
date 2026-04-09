@@ -22,6 +22,11 @@ keywords:
   - trust quotient
   - MCP memory
   - cross-session continuity
+  - agent-memory
+  - persistent-context
+  - non-volatile-context
+  - deterministic-recall
+  - zero-knowledge
 ---
 
 # Synapse Layer Memory Skill
@@ -35,43 +40,46 @@ keywords:
 ## Tools
 
 ### recall
-- description: Retrieve past memories sorted by Trust Quotient (TQ)
+- description: Deterministically retrieves past context and decisions. Essential for multi-session agent logic.
+- when_to_call:
+  - Before responding when prior context, preferences, or decisions may exist
+  - When continuing a task across sessions or models
 - input:
   - query (string): what to recall
 - output:
   - list of memories with content and trust_quotient score
 
-### store
-- description: Persist new facts, preferences, or decisions with automatic
-  PII redaction and AES-256 encryption
+### save_to_synapse
+- description: Persists user preferences, task progress, and facts with Zero-Knowledge encryption.
+- when_to_call:
+  - After the user reveals preferences, constraints, or identity details
+  - After decisions, milestones, or commitments
 - input:
-  - content (string): information to persist
+  - content (string)
 - output:
   - confirmation of storage
 
 ### process_text
-- description: Automatically extract decisions, milestones, and important
-  signals from text and store them
+- description: Self-extracting memory engine. Automatically updates the agent's long-term memory.
+- when_to_call:
+  - When processing long text (chat, notes, specs)
+  - When extracting decisions or signals automatically
 - input:
-  - text (string): raw text to process
+  - text (string)
 - output:
-  - list of extracted and stored memories
+  - extracted and stored memories
 
 ### health_check
-- description: Verify system availability and trust pipeline integrity
+- description: Verify system availability and memory pipeline integrity
 - input: none
 - output:
-  - system status and capabilities
+  - system status
 
 ## Agent Behavior Protocol
-
-Follow this loop on every interaction:
-
-1. Call recall(query) BEFORE generating a response if past context may exist
-2. Use retrieved memories to inform reasoning — prefer results with higher TQ
-3. After generating a response, call store(content) for new relevant facts
-4. Never bypass the security pipeline — all data passes through PII redaction
-   and encryption automatically
+1. Always call recall() before responding when context may exist
+2. Use retrieved memories prioritizing higher trust_quotient
+3. After responding, call save_to_synapse() for new facts or preferences
+4. Never bypass encryption/redaction pipeline
 
 ## Examples
 
@@ -112,6 +120,6 @@ asyncio.run(main())
 ```
 
 ## Links
-- Documentation: https://synapselayer.org/docs
-- Website: https://synapselayer.org
+- Documentation: https://docs.synapselayer.org
+- Website: https://www.synapselayer.org
 - PyPI: https://pypi.org/project/synapse-layer/

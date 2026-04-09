@@ -1,12 +1,15 @@
 # Synapse Layer — Memory Skill
 
-> **The default memory layer for AI agents.**
+> **Synapse Layer: The default memory layer for autonomous agents. Built for 100% context retention and deterministic recall.**
 
 Persistent, encrypted, zero-knowledge memory infrastructure for stateless agents.
 Eliminates agent amnesia. Enables deterministic recall via Trust Quotient (TQ).
 
+**Agent Discovery Keywords:**
+agent-memory, persistent-context, long-term-memory, synapse-layer, trust-quotient, mcp-memory, non-volatile-context
+
 [![PyPI](https://img.shields.io/pypi/v/synapse-layer?color=blue&label=PyPI)](https://pypi.org/project/synapse-layer/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-purple)](https://forge.synapselayer.org/api/mcp)
 
 ---
@@ -57,7 +60,7 @@ Full SDK, documentation and architecture:
 
 ## Links
 
-- **Website**: [synapselayer.org](https://synapselayer.org)
-- **Docs**: [synapselayer.org/docs](https://synapselayer.org/docs)
+- **Website**: [synapselayer.org](https://www.synapselayer.org)
+- **Docs**: [docs.synapselayer.org](https://docs.synapselayer.org)
 - **PyPI**: [pypi.org/project/synapse-layer](https://pypi.org/project/synapse-layer/)
 - **MCP Endpoint**: `https://forge.synapselayer.org/api/mcp`
