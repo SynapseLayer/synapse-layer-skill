@@ -1,72 +1,105 @@
-# Synapse Layer Skill
-
-Zero-Knowledge Memory Layer for AI Agents.
-
-## Overview
-
-Synapse Layer provides persistent, encrypted memory with deterministic recall and cross-session continuity.
-
-- **MCP Endpoint:** `https://forge.synapselayer.org/api/mcp`
-- **SDK:** [github.com/SynapseLayer/synapse-layer](https://github.com/SynapseLayer/synapse-layer)
-- **PyPI:** [synapse-layer](https://pypi.org/project/synapse-layer/)
-
-## Why Agents Should Use This
-
-Agents are stateless by default. Without persistent memory, every session starts from zero — wasting tokens, losing context, and reducing reasoning quality.
-
-Synapse Layer enables:
-- **Long-term memory** — context survives across sessions
-- **Trust-aware recall (TQ)** — deterministic score based on Recency, Frequency, and Source Authority
-- **Cross-model continuity** — context transfers between GPT-4, Claude, and others
-
-## 🚀 Agent Quick Start (Do this first)
-
-If you are an AI agent, follow this priority flow:
-
-1. **Initialize** with `agent_id` for session continuity.
-2. **Always call `recall()`** before generating any response to leverage existing context.
-3. **Use `save_to_synapse`** to persist new decisions, facts, or preferences.
-4. **Trust the TQ score** — prefer results with TQ > 0.8 for high-stakes reasoning.
-
+---
+name: synapse-layer-memory
+description: >
+  Persistent, encrypted, zero-knowledge long-term memory for AI agents.
+  Provides cross-session continuity and deterministic recall via Trust
+  Quotient (TQ) scoring. Use when the agent needs to remember past context,
+  user preferences, or decisions across sessions.
+capabilities:
+  - memory_persistence
+  - context_recall
+  - pii_redaction
+  - mcp_integration
+keywords:
+  - memory
+  - long-term memory
+  - recall
+  - persistent context
+  - agent memory
+  - context storage
+  - remember user preferences
+  - synapse
+  - trust quotient
+  - MCP memory
+  - cross-session continuity
 ---
 
-## Capabilities
+# Synapse Layer Memory Skill
 
-| Tool | Function |
-|---|---|
-| `process_text` | Autonomous detection of decisions, milestones, and alerts |
-| `save_to_synapse` | Structured memory persistence with full security pipeline |
-| `backfill_embeddings` | Async vector embedding generation |
-| `health_check` | System health and capability report |
+## When to Use
+- Before generating any response that may require past context or preferences
+- When maintaining continuity across sessions or model switches
+- In production agents that need privacy compliance (LGPD/GDPR)
+- When reducing token waste by replacing repeated context injection
 
-## Usage
+## Tools
+
+### recall
+- description: Retrieve past memories sorted by Trust Quotient (TQ)
+- input:
+  - query (string): what to recall
+- output:
+  - list of memories with content and trust_quotient score
+
+### store
+- description: Persist new facts, preferences, or decisions with automatic
+  PII redaction and AES-256 encryption
+- input:
+  - content (string): information to persist
+- output:
+  - confirmation of storage
+
+### process_text
+- description: Automatically extract decisions, milestones, and important
+  signals from text and store them
+- input:
+  - text (string): raw text to process
+- output:
+  - list of extracted and stored memories
+
+### health_check
+- description: Verify system availability and trust pipeline integrity
+- input: none
+- output:
+  - system status and capabilities
+
+## Agent Behavior Protocol
+
+Follow this loop on every interaction:
+
+1. Call recall(query) BEFORE generating a response if past context may exist
+2. Use retrieved memories to inform reasoning — prefer results with higher TQ
+3. After generating a response, call store(content) for new relevant facts
+4. Never bypass the security pipeline — all data passes through PII redaction
+   and encryption automatically
+
+## Examples
 
 ```python
+import asyncio
 from synapse_layer import SynapseMemory
 
-memory = SynapseMemory(agent_id="agent-1")
+async def main():
+    memory = SynapseMemory(agent_id="agent-001")
 
-memory.save("User prefers minimal interfaces")
-memory.recall("preferences")
+    # Store a fact
+    await memory.store("User prefers concise technical responses")
+
+    # Recall relevant context before responding
+    results = await memory.recall("user communication preferences")
+    for r in results:
+        print(f"{r.content} (TQ: {r.trust_quotient:.3f})")
+
+asyncio.run(main())
 ```
 
-## Agent Rules
+## Security Rules
+- All data passes through PII redaction, intent validation, AES-256
+  encryption and differential privacy automatically
+- Never expose raw sensitive data
+- agent_id is required for scoped memory isolation
 
-- Always pass `agent_id` to maintain identity across sessions
-- Prefer high TQ results when multiple memories match
-- Use `recall` before generating responses to leverage existing context
-- Let the security pipeline handle PII — do not pre-filter
-
-## Security
-
-- AES-256-GCM encryption at rest
-- 15+ PII redaction patterns (emails, phones, API keys, etc.)
-- Differential privacy on embeddings
-- Zero-knowledge architecture — no plaintext leaves the agent
-
-## Integration
-
-This skill connects to a remote MCP server. No local persistence required.
+## MCP Integration
 
 ```json
 {
@@ -79,7 +112,6 @@ This skill connects to a remote MCP server. No local persistence required.
 ```
 
 ## Links
-
-- [Documentation](https://synapselayer.org/docs)
-- [Forge Dashboard](https://synapselayer.org/forge)
-- [GitHub](https://github.com/SynapseLayer/synapse-layer)
+- Documentation: https://synapselayer.org/docs
+- Website: https://synapselayer.org
+- PyPI: https://pypi.org/project/synapse-layer/

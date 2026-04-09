@@ -1,36 +1,40 @@
-<div align="center">
+# Synapse Layer — Memory Skill
 
-  <h1>Synapse Layer Skill</h1>
+> **The default memory layer for AI agents.**
 
-  <p><strong>Agent-ready entrypoint for Synapse Layer — universal memory for AI agents.</strong></p>
+Persistent, encrypted, zero-knowledge memory infrastructure for stateless agents.
+Eliminates agent amnesia. Enables deterministic recall via Trust Quotient (TQ).
 
-  <br>
-
-  <a href="https://github.com/SynapseLayer/synapse-layer"><img src="https://img.shields.io/badge/Core_SDK-synapse--layer-blueviolet" alt="Core SDK"></a>
-  <a href="https://smithery.ai/servers/synapselayer/synapse-protocol"><img src="https://smithery.ai/badge/synapselayer/synapse-protocol" alt="Smithery"></a>
-  <a href="https://synapselayer.org/docs"><img src="https://img.shields.io/badge/Docs-Mintlify-0D9373" alt="Docs"></a>
-
-</div>
+[![PyPI](https://img.shields.io/pypi/v/synapse-layer?color=blue&label=PyPI)](https://pypi.org/project/synapse-layer/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-purple)](https://forge.synapselayer.org/api/mcp)
 
 ---
 
-## What Is This?
+## What This Skill Does
 
-This repository is the **universal agent entrypoint** for [Synapse Layer](https://github.com/SynapseLayer/synapse-layer).
-
-Import this skill into **Abacus AI**, **LangChain**, **CrewAI**, or any agent framework that supports skill/tool discovery.
+| Problem | Synapse Layer Solution |
+|---|---|
+| Agent forgets everything after session | Persistent cross-session memory |
+| Context injection wastes tokens | Deterministic recall on demand |
+| Privacy compliance (LGPD/GDPR) | AES-256 + PII redaction built-in |
+| Inconsistent agent behavior | Trust Quotient (TQ) scoring |
 
 ---
 
-## Import
+## 🧠 Built for Composio & Agent Ecosystems
 
-Point your agent framework to this repository or use the SKILL.md file directly:
+Fully compatible with Composio's tool-calling architecture.
 
-```
-https://github.com/SynapseLayer/synapse-layer-skill
-```
+Enables Claude, GPT and autonomous agents to:
+- Retain memory across sessions
+- Recall context deterministically
+- Eliminate token waste from repeated context injection
+- Comply with privacy regulations automatically
 
-Or connect via MCP:
+---
+
+## Quick MCP Config
 
 ```json
 {
@@ -44,26 +48,16 @@ Or connect via MCP:
 
 ---
 
-## Files
+## Core Repo
 
-| File | Purpose |
-|---|---|
-| [`SKILL.md`](SKILL.md) | Machine-readable agent interface specification |
-| [`README.md`](README.md) | Human-readable overview |
+Full SDK, documentation and architecture:
+→ [github.com/SynapseLayer/synapse-layer](https://github.com/SynapseLayer/synapse-layer)
 
 ---
 
-## Full Documentation
+## Links
 
-- 📖 [Docs](https://synapselayer.org/docs)
-- 🧠 [Core SDK](https://github.com/SynapseLayer/synapse-layer)
-- 🔌 [Smithery](https://smithery.ai/servers/synapselayer/synapse-protocol)
-- 📦 [PyPI](https://pypi.org/project/synapse-layer/)
-
----
-
-<div align="center">
-
-  <strong>Giving Agents a Past. Giving Models a Soul. ⚗️</strong>
-
-</div>
+- **Website**: [synapselayer.org](https://synapselayer.org)
+- **Docs**: [synapselayer.org/docs](https://synapselayer.org/docs)
+- **PyPI**: [pypi.org/project/synapse-layer](https://pypi.org/project/synapse-layer/)
+- **MCP Endpoint**: `https://forge.synapselayer.org/api/mcp`
