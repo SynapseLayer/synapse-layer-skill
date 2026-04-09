@@ -12,5 +12,6 @@
   "homepage": "https://www.synapselayer.org/",
   "docs": "https://docs.synapselayer.org",
   "repo": "https://github.com/SynapseLayer/synapse-layer-skill",
-  "mcp_endpoint": "https://forge.synapselayer.org/api/mcp"
+  "mcp_endpoint": "https://forge.synapselayer.org/api/mcp",
+  "server_card": "https://forge.synapselayer.org/.well-known/mcp/server-card.json"
 }

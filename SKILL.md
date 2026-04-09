@@ -123,3 +123,4 @@ asyncio.run(main())
 - Documentation: https://docs.synapselayer.org
 - Website: https://www.synapselayer.org
 - PyPI: https://pypi.org/project/synapse-layer/
+- Server Card: https://forge.synapselayer.org/.well-known/mcp/server-card.json
