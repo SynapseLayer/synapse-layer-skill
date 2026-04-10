@@ -1,13 +1,17 @@
 {
   "name": "synapse-layer",
-  "description": "Synapse Layer provides a long-term, zero-knowledge memory infrastructure for AI agents. It eliminates agent amnesia using Trust Quotient (TQ) scoring and native AES-256 encryption.",
+  "version": "1.1.0",
+  "description": "Synapse Layer — Continuous Consciousness Infrastructure for AI Systems. Persistent, secure, 1-line integration. AES-256-GCM, PII redaction, Trust Quotient scoring.",
   "keywords": [
     "agent-memory",
     "persistent-context",
     "long-term-memory",
     "mcp-memory",
     "deterministic-recall",
-    "zero-knowledge"
+    "zero-knowledge",
+    "aes-256",
+    "continuous-consciousness",
+    "sqlite-backend"
   ],
   "homepage": "https://www.synapselayer.org/",
   "docs": "https://docs.synapselayer.org",

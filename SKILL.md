@@ -1,10 +1,12 @@
 ---
 name: synapse-layer-memory
+version: "1.1.0"
 description: >
-  Persistent, encrypted, zero-knowledge long-term memory for AI agents.
-  Provides cross-session continuity and deterministic recall via Trust
-  Quotient (TQ) scoring. Use when the agent needs to remember past context,
-  user preferences, or decisions across sessions.
+  Continuous Consciousness Infrastructure for AI Systems.
+  Persistent, secure, 1-line integration. Provides cross-session
+  continuity, AES-256-GCM encryption, and deterministic recall via
+  Trust Quotient (TQ) scoring. Use when the agent needs to remember
+  past context, user preferences, or decisions across sessions.
 capabilities:
   - memory_persistence
   - context_recall
@@ -84,21 +86,23 @@ keywords:
 ## Examples
 
 ```python
-import asyncio
-from synapse_layer import SynapseMemory
+from synapse_memory import SynapseMemory, SqliteBackend, remember
 
-async def main():
-    memory = SynapseMemory(agent_id="agent-001")
+memory = SynapseMemory(
+    agent_id="agent-001",
+    backend=SqliteBackend(),  # persistent, survives restarts
+)
 
-    # Store a fact
-    await memory.store("User prefers concise technical responses")
+# 1-line integration with @remember decorator
+@remember(memory)
+async def answer(prompt: str) -> str:
+    return llm.chat(prompt)  # auto recall + store
 
-    # Recall relevant context before responding
-    results = await memory.recall("user communication preferences")
-    for r in results:
-        print(f"{r.content} (TQ: {r.trust_quotient:.3f})")
-
-asyncio.run(main())
+# Or manual control:
+await memory.store("User prefers concise technical responses")
+results = await memory.recall("user communication preferences")
+for r in results:
+    print(f"{r.content} (TQ: {r.trust_quotient:.3f})")
 ```
 
 ## Security Rules
