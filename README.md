@@ -37,7 +37,53 @@ Enables Claude, GPT and autonomous agents to:
 
 ---
 
-## Quick MCP Config
+## Quick MCP Config (1-Click Setup)
+
+No API keys required. Add to your config and restart.
+
+### Claude Desktop
+
+Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+
+```json
+{
+  "mcpServers": {
+    "synapse-layer": {
+      "url": "https://forge.synapselayer.org/api/mcp"
+    }
+  }
+}
+```
+
+### Cursor
+
+Edit `.cursor/mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "synapse-layer": {
+      "url": "https://forge.synapselayer.org/api/mcp"
+    }
+  }
+}
+```
+
+### Windsurf
+
+Edit `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "synapse-layer": {
+      "url": "https://forge.synapselayer.org/api/mcp"
+    }
+  }
+}
+```
+
+### Any MCP Client
 
 ```json
 {
