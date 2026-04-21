@@ -1,6 +1,6 @@
 # Synapse Layer — Memory Skill
 
-> **Current version: v1.2.0** u2014 [PyPI](https://pypi.org/project/synapse-layer/1.2.0/) u00b7 [CHANGELOG](https://github.com/SynapseLayer/synapse-layer/blob/main/CHANGELOG.md)
+> **Current version: v1.2.0** — [PyPI](https://pypi.org/project/synapse-layer/1.2.0/) · [CHANGELOG](https://github.com/SynapseLayer/synapse-layer/blob/main/CHANGELOG.md)
 
 
 > **Synapse Layer: The default memory layer for autonomous agents. Built for 100% context retention and deterministic recall.**
