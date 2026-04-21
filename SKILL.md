@@ -1,6 +1,6 @@
 ---
 name: synapse-layer-memory
-version: "1.1.0"
+version: "1.2.0"
 description: >
   Continuous Consciousness Infrastructure for AI Systems.
   Persistent, secure, 1-line integration. Provides cross-session
