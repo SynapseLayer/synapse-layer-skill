@@ -104,6 +104,24 @@ Edit `~/.codeium/windsurf/mcp_config.json`:
 }
 ```
 
+### Any MCP Client
+
+```json
+{
+  "mcpServers": {
+    "synapse-layer": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://forge.synapselayer.org/api/mcp",
+        "--header",
+        "x-connect-token: sk_connect_YOUR_TOKEN"
+      ]
+    }
+  }
+}
+```
+
 Restart your client. Done.
 
 ---
@@ -164,8 +182,8 @@ for result in results:
 ## Production
 
 - Live MCP endpoint: `forge.synapselayer.org`
-- Skill version: v2.3.1
-- SDK version on PyPI: see badge above
+- Skill surface: v2.3.1
+- Python SDK: v1.2.0 on PyPI (see badge)
 - MCP tools: 5 active (`recall`, `save_to_synapse`, `process_text`, `search`, `health_check`)
 
 ---
