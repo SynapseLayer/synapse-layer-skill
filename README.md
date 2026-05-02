@@ -1,58 +1,64 @@
-# Synapse Layer — Memory Skill
+![Version](https://img.shields.io/badge/skill--version-2.3.1-blue)
+![PyPI](https://img.shields.io/pypi/v/synapse-layer)
+![Security](https://img.shields.io/badge/MCP%20Security-10.0%2F10-brightgreen)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue)
+![Status](https://img.shields.io/badge/status-production-green)
 
-> **Current version: v1.2.0** — [PyPI](https://pypi.org/project/synapse-layer/1.2.0/) · [CHANGELOG](https://github.com/SynapseLayer/synapse-layer/blob/main/CHANGELOG.md)
+# Synapse Layer — Memory for AI Agents
 
+> **RAG retrieves. Synapse remembers.**
 
-> **Synapse Layer: The default memory layer for autonomous agents. Built for 100% context retention and deterministic recall.**
-
-Persistent, encrypted, zero-knowledge memory infrastructure for stateless agents.
-Eliminates agent amnesia. Enables deterministic recall via Trust Quotient (TQ).
-
-**Agent Discovery Keywords:**
-agent-memory, persistent-context, long-term-memory, synapse-layer, trust-quotient, mcp-memory, non-volatile-context
-
-[![PyPI](https://img.shields.io/pypi/v/synapse-layer?color=blue&label=PyPI)](https://pypi.org/project/synapse-layer/)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
-[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-purple)](https://forge.synapselayer.org/api/mcp)
+Persistent, encrypted, cross-agent memory for any AI agent.
+Server never sees plaintext. Works in 30 seconds.
 
 ---
 
-## What This Skill Does
+## The Problem
 
-| Problem | Synapse Layer Solution |
-|---|---|
-| Agent forgets everything after session | Persistent cross-session memory |
-| Context injection wastes tokens | Deterministic recall on demand |
-| Privacy compliance (LGPD/GDPR) | AES-256 + PII redaction built-in |
-| Inconsistent agent behavior | Trust Quotient (TQ) scoring |
+Every AI agent starts from zero.
 
----
+No memory of past sessions. No context from other models.
+Every conversation is a blank slate.
 
-## 🧠 Built for Composio & Agent Ecosystems
-
-Fully compatible with Composio's tool-calling architecture.
-
-Enables Claude, GPT and autonomous agents to:
-- Retain memory across sessions
-- Recall context deterministically
-- Eliminate token waste from repeated context injection
-- Comply with privacy regulations automatically
+**Synapse Layer fixes that.**
 
 ---
 
-## Quick MCP Config (1-Click Setup)
+## How It Works
 
-No API keys required. Add to your config and restart.
+```
+Claude ───────┐
+              │
+Cursor ───────┼──→ Synapse Layer → governed recall → any agent
+              │
+ChatGPT ──────┘
+```
+
+Save once. Recall anywhere.
+Encrypted memory. Server never sees plaintext.
+
+---
+
+## Quick Install
+
+Get your token first:
+[synapselayer.org](https://synapselayer.org) → Dashboard → Connect
 
 ### Claude Desktop
 
-Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "synapse-layer": {
-      "url": "https://forge.synapselayer.org/api/mcp"
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://forge.synapselayer.org/api/mcp",
+        "--header",
+        "x-connect-token: sk_connect_YOUR_TOKEN"
+      ]
     }
   }
 }
@@ -66,7 +72,13 @@ Edit `.cursor/mcp.json` in your project root:
 {
   "mcpServers": {
     "synapse-layer": {
-      "url": "https://forge.synapselayer.org/api/mcp"
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://forge.synapselayer.org/api/mcp",
+        "--header",
+        "x-connect-token: sk_connect_YOUR_TOKEN"
+      ]
     }
   }
 }
@@ -80,7 +92,13 @@ Edit `~/.codeium/windsurf/mcp_config.json`:
 {
   "mcpServers": {
     "synapse-layer": {
-      "url": "https://forge.synapselayer.org/api/mcp"
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://forge.synapselayer.org/api/mcp",
+        "--header",
+        "x-connect-token: sk_connect_YOUR_TOKEN"
+      ]
     }
   }
 }
@@ -92,24 +110,90 @@ Edit `~/.codeium/windsurf/mcp_config.json`:
 {
   "mcpServers": {
     "synapse-layer": {
-      "url": "https://forge.synapselayer.org/api/mcp"
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://forge.synapselayer.org/api/mcp",
+        "--header",
+        "x-connect-token: sk_connect_YOUR_TOKEN"
+      ]
     }
   }
 }
 ```
 
+Restart your client. Done.
+
 ---
 
-## Core Repo
+## What Changes
 
-Full SDK, documentation and architecture:
-→ [github.com/SynapseLayer/synapse-layer](https://github.com/SynapseLayer/synapse-layer)
+| Without Synapse Layer | With Synapse Layer |
+|---|---|
+| Agent forgets every session | Persistent memory across sessions |
+| Context locked to one model | Cross-agent memory |
+| Plaintext exposure risk | Encrypted memory — server never sees plaintext |
+| Repeated context injection | Governed recall on demand |
+| No memory reliability signal | TRUTH QUOTIENT™ scoring |
+
+---
+
+## Python SDK
+
+```bash
+pip install synapse-layer
+```
+
+```python
+from synapse_memory.client import Synapse
+
+client = Synapse(token="sk_connect_YOUR_TOKEN")
+
+client.remember("User prefers concise technical responses")
+
+results = client.recall("user preferences")
+for result in results:
+    print(result)
+```
+
+---
+
+## Trust & Security
+
+- AES-256-GCM encryption
+- Server never sees plaintext
+- TRUTH QUOTIENT™ memory scoring
+- Header-first MCP auth
+- Designed for LGPD/GDPR alignment
+- Apache 2.0
+
+---
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `401 Unauthorized` | Missing or invalid token | Verify your `sk_connect_` token at [synapselayer.org](https://synapselayer.org) → Dashboard → Connect |
+| `ECONNREFUSED` | Client not using `mcp-remote` | Ensure config uses `npx mcp-remote` with `--header` |
+| Empty recall results | No memories stored yet | Call `save_to_synapse` first, then recall |
+
+---
+
+## Production
+
+- Live MCP endpoint: `forge.synapselayer.org`
+- Skill surface: v2.3.1
+- Python SDK: v1.2.0 on PyPI (see badge)
+- MCP tools: 5 active (`recall`, `save_to_synapse`, `process_text`, `search`, `health_check`)
 
 ---
 
 ## Links
 
-- **Website**: [synapselayer.org](https://www.synapselayer.org)
-- **Docs**: [docs.synapselayer.org](https://docs.synapselayer.org)
-- **PyPI**: [pypi.org/project/synapse-layer](https://pypi.org/project/synapse-layer/)
-- **MCP Endpoint**: `https://forge.synapselayer.org/api/mcp`
+- Website: [synapselayer.org](https://synapselayer.org)
+- PyPI: [pypi.org/project/synapse-layer](https://pypi.org/project/synapse-layer/)
+- Core Repo: [github.com/SynapseLayer/synapse-layer](https://github.com/SynapseLayer/synapse-layer)
+- MCP Endpoint: `https://forge.synapselayer.org/api/mcp`
+
+Synapse Layer is the State Continuity Layer for AI agents.
+Built for production. Designed for LGPD/GDPR alignment. Apache 2.0.

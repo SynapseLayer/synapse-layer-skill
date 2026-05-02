@@ -1,21 +1,39 @@
 {
   "name": "synapse-layer",
-  "version": "1.2.0",
-  "description": "Synapse Layer — Continuous Consciousness Infrastructure for AI Systems. Persistent, secure, 1-line integration. AES-256-GCM, PII redaction, Trust Quotient scoring.",
+  "version": "2.3.1",
+  "description": "Persistent, encrypted, cross-agent memory for AI agents. Server never sees plaintext. TRUTH QUOTIENT scoring and governed recall.",
   "keywords": [
     "agent-memory",
     "persistent-context",
     "long-term-memory",
     "mcp-memory",
-    "deterministic-recall",
-    "zero-knowledge",
-    "aes-256",
-    "continuous-consciousness",
-    "sqlite-backend"
+    "governed-recall",
+    "aes-256-gcm",
+    "cross-agent-memory",
+    "state-continuity",
+    "truth-quotient",
+    "pii-redaction",
+    "encrypted-memory",
+    "mcp",
+    "ai-agents",
+    "langchain",
+    "crewai",
+    "autogen"
   ],
-  "homepage": "https://www.synapselayer.org/",
-  "docs": "https://docs.synapselayer.org",
+  "homepage": "https://synapselayer.org",
   "repo": "https://github.com/SynapseLayer/synapse-layer-skill",
+  "core_repo": "https://github.com/SynapseLayer/synapse-layer",
   "mcp_endpoint": "https://forge.synapselayer.org/api/mcp",
-  "server_card": "https://forge.synapselayer.org/.well-known/mcp/server-card.json"
+  "auth": {
+    "type": "header",
+    "header": "x-connect-token",
+    "format": "sk_connect_YOUR_TOKEN",
+    "description": "Get your token at synapselayer.org > Dashboard > Connect"
+  },
+  "security": {
+    "encryption": "AES-256-GCM",
+    "plaintext_on_server": false,
+    "auth_transport": "header",
+    "designed_for": ["LGPD/GDPR alignment"]
+  }
 }
