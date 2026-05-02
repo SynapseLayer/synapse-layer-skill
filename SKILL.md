@@ -1,130 +1,211 @@
 ---
 name: synapse-layer-memory
-version: "1.2.0"
+version: "2.3.1"
 description: >
-  Continuous Consciousness Infrastructure for AI Systems.
-  Persistent, secure, 1-line integration. Provides cross-session
-  continuity, AES-256-GCM encryption, and deterministic recall via
-  Trust Quotient (TQ) scoring. Use when the agent needs to remember
-  past context, user preferences, or decisions across sessions.
+  Persistent, encrypted, cross-agent memory infrastructure for AI agents.
+  Store, recall, and transfer state across models and sessions via MCP.
+  Server never sees plaintext. TRUTH QUOTIENT™ scores memories for reliability.
 capabilities:
   - memory_persistence
-  - context_recall
+  - governed_recall
   - pii_redaction
+  - cross_agent_transfer
   - mcp_integration
+  - truth_quotient_scoring
 keywords:
   - memory
   - long-term memory
   - recall
   - persistent context
   - agent memory
-  - context storage
-  - remember user preferences
-  - synapse
-  - trust quotient
+  - cross-agent memory
+  - state continuity
+  - truth quotient
+  - governed recall
   - MCP memory
+  - encrypted memory
   - cross-session continuity
   - agent-memory
   - persistent-context
   - non-volatile-context
-  - deterministic-recall
-  - zero-knowledge
 ---
 
-# Synapse Layer Memory Skill
+# Synapse Layer — Memory Skill v2.3.1
 
-## When to Use
-- Before generating any response that may require past context or preferences
-- When maintaining continuity across sessions or model switches
-- In production agents that need privacy compliance (LGPD/GDPR)
-- When reducing token waste by replacing repeated context injection
+## Identity
+
+Synapse Layer is the persistent memory layer for AI agents.
+
+It solves the stateless-agent problem: agents forget decisions,
+preferences, constraints, and prior work across sessions and tools.
+
+- Core guarantee: server never sees plaintext.
+- Trust model: TRUTH QUOTIENT™ scores memories from 0.0 to 1.0.
+- Scope: cross-agent memory — save in one client, recall in another.
+- Category: State Continuity Layer | OAuth for AI Memory.
+
+## Activation Rules
+
+Always attempt recall before responding when context may exist.
+
+Activate recall when:
+
+- The user references prior decisions, preferences, or context.
+- The task continues a previous project, workflow, or session.
+- The user switches from another AI tool and expects continuity.
+- The user says: "what we discussed", "my preferences", "last time",
+  "remember", "as I told you", or similar.
+- The user mentions their name, role, project, stack, or constraints.
+
+Save memory after:
+
+- A decision, milestone, or commitment is made.
+- The user reveals a stable preference or constraint.
+- A task is completed.
+- The user corrects the agent.
+- A new project-specific rule is established.
+
+Never save:
+
+- Passwords, API keys, tokens, credentials, or secrets.
+- Raw financial data or card numbers.
+- Sensitive health data.
+- Anything the user explicitly says not to store.
 
 ## Tools
 
 ### recall
-- description: Deterministically retrieves past context and decisions. Essential for multi-session agent logic.
-- when_to_call:
-  - Before responding when prior context, preferences, or decisions may exist
-  - When continuing a task across sessions or models
-- input:
-  - query (string): what to recall
-- output:
-  - list of memories with content and trust_quotient score
+
+Retrieves past context, decisions, and preferences from encrypted memory.
+Use before responding when prior context may exist.
+
+Input:
+
+- query (string, required)
+- agent_id (string, optional)
+- limit (number, optional, default 10, max 50)
+
+Output: memories with content and TRUTH QUOTIENT™ score.
+
+TQ interpretation:
+
+- TQ >= 0.80: high confidence — use directly.
+- TQ >= 0.50 and < 0.80: medium confidence — use with caveat.
+- TQ < 0.50: low confidence — verify with the user.
+
+**If recall fails or returns no results, do not hallucinate past context.
+Acknowledge the lack of prior memory and proceed with current information only.**
 
 ### save_to_synapse
-- description: Persists user preferences, task progress, and facts with Zero-Knowledge encryption.
-- when_to_call:
-  - After the user reveals preferences, constraints, or identity details
-  - After decisions, milestones, or commitments
-- input:
-  - content (string)
-- output:
-  - confirmation of storage
+
+Persists facts, preferences, decisions, and project state.
+Use after new stable information emerges.
+
+Input:
+
+- content (string, required)
+- agent_id (string, optional)
+
+Output: storage confirmation.
 
 ### process_text
-- description: Self-extracting memory engine. Automatically updates the agent's long-term memory.
-- when_to_call:
-  - When processing long text (chat, notes, specs)
-  - When extracting decisions or signals automatically
-- input:
-  - text (string)
-- output:
-  - extracted and stored memories
+
+Extracts durable memories from long text, specs, notes, or conversations.
+Use when the user provides long-form context to preserve.
+
+Input:
+
+- text (string, required)
+- agent_id (string, optional)
+
+Output: extracted memory candidates and storage result.
+
+### search
+
+Searches cross-agent memory with governed recall and TRUTH QUOTIENT™ ranking.
+Use when recall returns insufficient results or user asks for broad search.
+
+Input:
+
+- query (string, required)
+- agent_id (string, optional)
+- limit (number, optional, default 20, max 50)
 
 ### health_check
-- description: Verify system availability and memory pipeline integrity
-- input: none
-- output:
-  - system status
 
-## Agent Behavior Protocol
-1. Always call recall() before responding when context may exist
-2. Use retrieved memories prioritizing higher trust_quotient
-3. After responding, call save_to_synapse() for new facts or preferences
-4. Never bypass encryption/redaction pipeline
+Verifies MCP availability and memory pipeline health.
+Use once per session before the first memory action.
 
-## Examples
+Input: none
+Output: system status and pipeline health.
 
-```python
-from synapse_memory import SynapseMemory, SqliteBackend, remember
+## Mandatory Execution Order
 
-memory = SynapseMemory(
-    agent_id="agent-001",
-    backend=SqliteBackend(),  # persistent, survives restarts
-)
+1. health_check — once per session, before first memory action.
+2. recall — before responding when context may exist.
+3. Generate response using recalled context and TQ weighting.
+4. save_to_synapse — after new stable facts, corrections, or milestones.
 
-# 1-line integration with @remember decorator
-@remember(memory)
-async def answer(prompt: str) -> str:
-    return llm.chat(prompt)  # auto recall + store
+## Proactive Memory Behavior
 
-# Or manual control:
-await memory.store("User prefers concise technical responses")
-results = await memory.recall("user communication preferences")
-for r in results:
-    print(f"{r.content} (TQ: {r.trust_quotient:.3f})")
-```
+This is the most important section for agent developers.
 
-## Security Rules
-- All data passes through PII redaction, intent validation, AES-256
-  encryption and differential privacy automatically
-- Never expose raw sensitive data
-- agent_id is required for scoped memory isolation
+Do not wait for the user to say "remember this."
 
-## MCP Integration
+The agent must proactively:
+
+- Recall when context might exist.
+- Save durable facts after they emerge.
+- Use TQ scores to determine confidence.
+- Surface conflicts instead of silently overriding memory.
+
+If current instructions conflict with recalled memory, say:
+"Memory conflict detected: [brief conflict]. I will follow the latest
+explicit user instruction unless you want me to preserve the previous rule."
+
+**If recall fails, do not hallucinate past context.**
+Acknowledge the absence and work with current information.
+
+## Cross-Agent Logic
+
+Omit agent_id to search across all agents.
+
+This enables:
+
+- Save in Claude.
+- Recall in Cursor.
+- Continue in any MCP-compatible agent.
+
+## Security Model
+
+- AES-256-GCM encryption.
+- Server never sees plaintext.
+- Header-first auth.
+- PII-aware storage pipeline.
+- Apache 2.0.
+
+## MCP Configuration
 
 ```json
 {
   "mcpServers": {
     "synapse-layer": {
-      "url": "https://forge.synapselayer.org/api/mcp"
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://forge.synapselayer.org/api/mcp",
+        "--header",
+        "x-connect-token: sk_connect_YOUR_TOKEN"
+      ]
     }
   }
 }
 ```
 
+Get your token: [synapselayer.org](https://synapselayer.org) → Dashboard → Connect
+
 ## Links
-- Documentation: https://docs.synapselayer.org
-- Website: https://www.synapselayer.org
-- PyPI: https://pypi.org/project/synapse-layer/
-- Server Card: https://forge.synapselayer.org/.well-known/mcp/server-card.json
+
+- Website: [synapselayer.org](https://synapselayer.org)
+- PyPI: [pypi.org/project/synapse-layer](https://pypi.org/project/synapse-layer/)
+- Core Repo: [github.com/SynapseLayer/synapse-layer](https://github.com/SynapseLayer/synapse-layer)
