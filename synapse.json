@@ -1,0 +1,12 @@
+{
+  "name": "synapse-layer",
+  "version": "2.3.7",
+  "endpoint": "https://forge.synapselayer.org/mcp",
+  "auth": {
+    "type": "bearer",
+    "header": "Authorization",
+    "format": "Bearer sk_connect_YOUR_TOKEN"
+  },
+  "tools": ["store_memory", "recall_memory", "list_memories", "search", "health_check"],
+  "homepage": "https://forge.synapselayer.org"
+}
