@@ -1,6 +1,6 @@
 {
   "name": "synapse-layer",
-  "version": "2.3.1",
+  "version": "2.3.7",
   "description": "Persistent, encrypted, cross-agent memory for AI agents. Server never sees plaintext. TRUTH QUOTIENT scoring and governed recall.",
   "keywords": [
     "agent-memory",
@@ -34,6 +34,8 @@
     "encryption": "AES-256-GCM",
     "plaintext_on_server": false,
     "auth_transport": "header",
-    "designed_for": ["LGPD/GDPR alignment"]
+    "designed_for": [
+      "LGPD/GDPR alignment"
+    ]
   }
 }

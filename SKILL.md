@@ -1,211 +1,61 @@
 ---
-name: synapse-layer-memory
-version: "2.3.1"
-description: >
-  Persistent, encrypted, cross-agent memory infrastructure for AI agents.
-  Store, recall, and transfer state across models and sessions via MCP.
-  Server never sees plaintext. TRUTH QUOTIENT™ scores memories for reliability.
-capabilities:
-  - memory_persistence
-  - governed_recall
-  - pii_redaction
-  - cross_agent_transfer
-  - mcp_integration
-  - truth_quotient_scoring
-keywords:
-  - memory
-  - long-term memory
-  - recall
-  - persistent context
-  - agent memory
-  - cross-agent memory
-  - state continuity
-  - truth quotient
-  - governed recall
-  - MCP memory
-  - encrypted memory
-  - cross-session continuity
-  - agent-memory
-  - persistent-context
-  - non-volatile-context
+name: synapse-layer
+description: Persistent memory infrastructure for AI agents
+version: "2.3.7"
+author: Ismael Marchi
+tags: [memory, mcp, ai-agents, llm, typescript, cross-agent]
 ---
 
-# Synapse Layer — Memory Skill v2.3.1
+# Synapse Layer — Memory Skill
 
-## Identity
+## What This Does
 
-Synapse Layer is the persistent memory layer for AI agents.
+Synapse Layer is a persistent memory infrastructure for AI agents. It solves
+the stateless-agent problem: agents forget decisions, preferences, and context
+across sessions. With Synapse, any MCP-compatible agent can store and recall
+memories — AES-256-GCM encrypted at rest, scored by Trust Quotient for
+reliability, and scoped per-user with tenant isolation. One agent stores,
+another recalls. Memory survives across sessions, models, and tools.
 
-It solves the stateless-agent problem: agents forget decisions,
-preferences, constraints, and prior work across sessions and tools.
+## Agent Rules
 
-- Core guarantee: server never sees plaintext.
-- Trust model: TRUTH QUOTIENT™ scores memories from 0.0 to 1.0.
-- Scope: cross-agent memory — save in one client, recall in another.
-- Category: State Continuity Layer | OAuth for AI Memory.
+**MUST:**
+- `store()` after each interaction that contains a decision, preference, or constraint worth persisting.
+- `recall()` before responding when the user references prior context, preferences, or past work.
+- Filter recall results by `tq >= 0.7` when high confidence is required.
+- Include `agent` identifier on every `store()` call for cross-agent traceability.
 
-## Activation Rules
+**MUST NOT:**
+- Store PII without explicit user consent.
+- Assume a memory exists without calling `recall()` first.
+- Expose raw memory content in logs or error messages.
+- Store ephemeral or throwaway content (e.g., "ok", "thanks").
 
-Always attempt recall before responding when context may exist.
+## Trust Quotient (TQ)
 
-Activate recall when:
+Trust Quotient is a per-memory confidence score ranging from 0.0 to 1.0.
 
-- The user references prior decisions, preferences, or context.
-- The task continues a previous project, workflow, or session.
-- The user switches from another AI tool and expects continuity.
-- The user says: "what we discussed", "my preferences", "last time",
-  "remember", "as I told you", or similar.
-- The user mentions their name, role, project, stack, or constraints.
+- **What it measures**: Reliability of a memory based on content density,
+  semantic alignment with recall queries, and noise level.
+- **How to use**: Filter recall results by `tq >= 0.7` for high-confidence
+  decisions. Use `tq >= 0.5` for general context. Memories below 0.3 may
+  contain noise or low-relevance content.
+- **Scoring**: TQ = f(density, alignment, noise). Weights are proprietary
+  and dynamically calibrated.
 
-Save memory after:
+## Multi-LLM Compatibility
 
-- A decision, milestone, or commitment is made.
-- The user reveals a stable preference or constraint.
-- A task is completed.
-- The user corrects the agent.
-- A new project-specific rule is established.
+Synapse Layer works with any MCP-compatible client:
 
-Never save:
-
-- Passwords, API keys, tokens, credentials, or secrets.
-- Raw financial data or card numbers.
-- Sensitive health data.
-- Anything the user explicitly says not to store.
-
-## Tools
-
-### recall
-
-Retrieves past context, decisions, and preferences from encrypted memory.
-Use before responding when prior context may exist.
-
-Input:
-
-- query (string, required)
-- agent_id (string, optional)
-- limit (number, optional, default 10, max 50)
-
-Output: memories with content and TRUTH QUOTIENT™ score.
-
-TQ interpretation:
-
-- TQ >= 0.80: high confidence — use directly.
-- TQ >= 0.50 and < 0.80: medium confidence — use with caveat.
-- TQ < 0.50: low confidence — verify with the user.
-
-**If recall fails or returns no results, do not hallucinate past context.
-Acknowledge the lack of prior memory and proceed with current information only.**
-
-### save_to_synapse
-
-Persists facts, preferences, decisions, and project state.
-Use after new stable information emerges.
-
-Input:
-
-- content (string, required)
-- agent_id (string, optional)
-
-Output: storage confirmation.
-
-### process_text
-
-Extracts durable memories from long text, specs, notes, or conversations.
-Use when the user provides long-form context to preserve.
-
-Input:
-
-- text (string, required)
-- agent_id (string, optional)
-
-Output: extracted memory candidates and storage result.
-
-### search
-
-Searches cross-agent memory with governed recall and TRUTH QUOTIENT™ ranking.
-Use when recall returns insufficient results or user asks for broad search.
-
-Input:
-
-- query (string, required)
-- agent_id (string, optional)
-- limit (number, optional, default 20, max 50)
-
-### health_check
-
-Verifies MCP availability and memory pipeline health.
-Use once per session before the first memory action.
-
-Input: none
-Output: system status and pipeline health.
-
-## Mandatory Execution Order
-
-1. health_check — once per session, before first memory action.
-2. recall — before responding when context may exist.
-3. Generate response using recalled context and TQ weighting.
-4. save_to_synapse — after new stable facts, corrections, or milestones.
-
-## Proactive Memory Behavior
-
-This is the most important section for agent developers.
-
-Do not wait for the user to say "remember this."
-
-The agent must proactively:
-
-- Recall when context might exist.
-- Save durable facts after they emerge.
-- Use TQ scores to determine confidence.
-- Surface conflicts instead of silently overriding memory.
-
-If current instructions conflict with recalled memory, say:
-"Memory conflict detected: [brief conflict]. I will follow the latest
-explicit user instruction unless you want me to preserve the previous rule."
-
-**If recall fails, do not hallucinate past context.**
-Acknowledge the absence and work with current information.
-
-## Cross-Agent Logic
-
-Omit agent_id to search across all agents.
-
-This enables:
-
-- Save in Claude.
-- Recall in Cursor.
-- Continue in any MCP-compatible agent.
-
-## Security Model
-
-- AES-256-GCM encryption.
-- Server never sees plaintext.
-- Header-first auth.
-- PII-aware storage pipeline.
-- Apache 2.0.
-
-## MCP Configuration
-
-```json
-{
-  "mcpServers": {
-    "synapse-layer": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://forge.synapselayer.org/api/mcp",
-        "--header",
-        "x-connect-token: sk_connect_YOUR_TOKEN"
-      ]
-    }
-  }
-}
-```
-
-Get your token: [synapselayer.org](https://synapselayer.org) → Dashboard → Connect
+- **Claude** (Desktop + API) — native MCP support
+- **GPT-4 / GPT-4o** — via Synapse Proxy (OpenAI SDK compatible)
+- **Gemini** — via MCP bridge
+- **Llama / Mistral / local models** — via MCP stdio bridge
+- **LangChain / CrewAI / AutoGen** — via Python SDK adapters
 
 ## Links
 
-- Website: [synapselayer.org](https://synapselayer.org)
-- PyPI: [pypi.org/project/synapse-layer](https://pypi.org/project/synapse-layer/)
-- Core Repo: [github.com/SynapseLayer/synapse-layer](https://github.com/SynapseLayer/synapse-layer)
+- **Forge**: [forge.synapselayer.org](https://forge.synapselayer.org)
+- **Docs**: [forge.synapselayer.org/docs](https://forge.synapselayer.org/docs)
+- **SDK (Python)**: [pypi.org/project/synapse-layer](https://pypi.org/project/synapse-layer/)
+- **GitHub**: [github.com/SynapseLayer](https://github.com/SynapseLayer)
