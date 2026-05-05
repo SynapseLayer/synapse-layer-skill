@@ -1,12 +1,14 @@
 ---
 name: synapse-layer
-description: Persistent memory infrastructure for AI agents
+description: "Persistent memory skill for AI agents. Remembers preferences, brand voice and decisions with Trust Quotient scoring."
 version: "2.3.7"
 author: Ismael Marchi
-tags: [memory, mcp, ai-agents, llm, typescript, cross-agent]
+tags: [memory, mcp, ai-agents, llm, typescript, cross-agent, state-continuity]
 ---
 
 # Synapse Layer — Memory Skill
+
+> RAG retrieves. Synapse remembers.
 
 ## What This Does
 
@@ -16,6 +18,8 @@ across sessions. With Synapse, any MCP-compatible agent can store and recall
 memories — AES-256-GCM encrypted at rest, scored by Trust Quotient for
 reliability, and scoped per-user with tenant isolation. One agent stores,
 another recalls. Memory survives across sessions, models, and tools.
+
+**Category**: OAuth for AI Memory — State Continuity Layer.
 
 ## Agent Rules
 

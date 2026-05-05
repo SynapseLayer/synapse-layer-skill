@@ -1,9 +1,11 @@
 {
   "name": "synapse-layer",
-  "description": "Persistent memory infrastructure for AI agents",
+  "description": "Persistent memory infrastructure for AI agents — encrypted, governed, and cross-agent. The OAuth for AI Memory.",
   "version": "2.3.7",
   "endpoint": "https://forge.synapselayer.org/mcp",
-  "capabilities": ["store_memory", "recall_memory", "list_memories"],
+  "capabilities": ["store_memory", "recall_memory", "list_memories", "search", "health_check"],
   "auth": "bearer",
-  "tq_enabled": true
+  "tq_enabled": true,
+  "category": "memory-infrastructure",
+  "hero": "RAG retrieves. Synapse remembers."
 }
