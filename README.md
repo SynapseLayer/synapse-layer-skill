@@ -1,15 +1,14 @@
 ![Version](https://img.shields.io/badge/skill--version-2.3.1-blue)
 ![PyPI](https://img.shields.io/pypi/v/synapse-layer)
-![Security](https://img.shields.io/badge/MCP%20Security-10.0%2F10-brightgreen)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
-![Status](https://img.shields.io/badge/status-production-green)
+![Status](https://img.shields.io/badge/status-beta-yellow)
 
 # Synapse Layer — Memory for AI Agents
 
 > **RAG retrieves. Synapse remembers.**
 
 Persistent, encrypted, cross-agent memory for any AI agent.
-Server never sees plaintext. Works in 30 seconds.
+Per-operation random IV. Works in 30 seconds.
 
 ---
 
@@ -35,7 +34,7 @@ ChatGPT ──────┘
 ```
 
 Save once. Recall anywhere.
-Encrypted memory. Server never sees plaintext.
+Encrypted memory. Per-operation random IV.
 
 ---
 
@@ -132,9 +131,9 @@ Restart your client. Done.
 |---|---|
 | Agent forgets every session | Persistent memory across sessions |
 | Context locked to one model | Cross-agent memory |
-| Plaintext exposure risk | Encrypted memory — server never sees plaintext |
+| Plaintext exposure risk | Encrypted memory — AES-256-GCM at rest |
 | Repeated context injection | Governed recall on demand |
-| No memory reliability signal | TRUTH QUOTIENT™ scoring |
+| No memory reliability signal | TRUTH QUOTIENT scoring |
 
 ---
 
@@ -161,8 +160,8 @@ for result in results:
 ## Trust & Security
 
 - AES-256-GCM encryption
-- Server never sees plaintext
-- TRUTH QUOTIENT™ memory scoring
+- Per-operation random IV
+- TRUTH QUOTIENT memory scoring
 - Header-first MCP auth
 - Designed for LGPD/GDPR alignment
 - Apache 2.0
@@ -196,4 +195,4 @@ for result in results:
 - MCP Endpoint: `https://forge.synapselayer.org/api/mcp`
 
 Synapse Layer is the State Continuity Layer for AI agents.
-Built for production. Designed for LGPD/GDPR alignment. Apache 2.0.
+Built for beta use. Designed for LGPD/GDPR alignment. Apache 2.0.
