@@ -1,14 +1,14 @@
-![Version](https://img.shields.io/badge/skill--version-2.3.1-blue)
 ![PyPI](https://img.shields.io/pypi/v/synapse-layer)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Status](https://img.shields.io/badge/status-beta-yellow)
 
-# Synapse Layer — Memory for AI Agents
+# Synapse Layer — Memory Skill
 
 > **RAG retrieves. Synapse remembers.**
 
-Persistent, encrypted, cross-agent memory for any AI agent.
-Per-operation random IV. Works in 30 seconds.
+**Persistent memory infrastructure for AI agents — AES-256-GCM encrypted at rest, semantic search, MCP-native.**
+
+Synapse Layer is open-source persistent memory infrastructure for AI agents and assistants. Memories are encrypted at rest with AES-256-GCM, indexed via pgvector HNSW for semantic recall, and exposed through MCP JSON-RPC for native integration with Claude, GPT, Gemini, and any MCP-compatible client. Apache 2.0 licensed.
 
 ---
 
@@ -41,7 +41,7 @@ Encrypted memory. Per-operation random IV.
 ## Quick Install
 
 Get your token first:
-[synapselayer.org](https://synapselayer.org) → Dashboard → Connect
+[forge.synapselayer.org](https://forge.synapselayer.org) → Dashboard → Connect
 
 ### Claude Desktop
 
@@ -131,9 +131,9 @@ Restart your client. Done.
 |---|---|
 | Agent forgets every session | Persistent memory across sessions |
 | Context locked to one model | Cross-agent memory |
-| Plaintext exposure risk | Encrypted memory — AES-256-GCM at rest |
+| Plaintext exposure risk | AES-256-GCM encrypted at rest |
 | Repeated context injection | Governed recall on demand |
-| No memory reliability signal | TRUTH QUOTIENT scoring |
+| No memory reliability signal | Trust Quotient scoring |
 
 ---
 
@@ -159,9 +159,9 @@ for result in results:
 
 ## Trust & Security
 
-- AES-256-GCM encryption
+- AES-256-GCM encryption at rest
 - Per-operation random IV
-- TRUTH QUOTIENT memory scoring
+- Trust Quotient memory scoring
 - Header-first MCP auth
 - Designed for LGPD/GDPR alignment
 - Apache 2.0
@@ -172,7 +172,7 @@ for result in results:
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| `401 Unauthorized` | Missing or invalid token | Verify your `sk_connect_` token at [synapselayer.org](https://synapselayer.org) → Dashboard → Connect |
+| `401 Unauthorized` | Missing or invalid token | Verify your `sk_connect_` token at [forge.synapselayer.org](https://forge.synapselayer.org) → Dashboard → Connect |
 | `ECONNREFUSED` | Client not using `mcp-remote` | Ensure config uses `npx mcp-remote` with `--header` |
 | Empty recall results | No memories stored yet | Call `save_to_synapse` first, then recall |
 
@@ -181,18 +181,26 @@ for result in results:
 ## Production
 
 - Live MCP endpoint: `forge.synapselayer.org`
-- Skill surface: v2.3.1
-- Python SDK: v1.2.0 on PyPI (see badge)
 - MCP tools: 5 active (`recall`, `save_to_synapse`, `process_text`, `search`, `health_check`)
+
+---
+
+## Related Projects
+
+| Project | Description |
+|---------|-------------|
+| [synapse-layer](https://github.com/SynapseLayer/synapse-layer) | Core server — MCP endpoint, encryption engine, pgvector indexing |
+| [synapse-sdk-python](https://github.com/SynapseLayer/synapse-sdk-python) | Python SDK — LangChain, CrewAI, and A2A protocol adapters |
+| [synapse-layer-langgraph](https://github.com/SynapseLayer/synapse-layer-langgraph) | LangGraph checkpoint saver with encrypted state persistence |
 
 ---
 
 ## Links
 
 - Website: [synapselayer.org](https://synapselayer.org)
+- Forge (Dashboard): [forge.synapselayer.org](https://forge.synapselayer.org)
 - PyPI: [pypi.org/project/synapse-layer](https://pypi.org/project/synapse-layer/)
 - Core Repo: [github.com/SynapseLayer/synapse-layer](https://github.com/SynapseLayer/synapse-layer)
 - MCP Endpoint: `https://forge.synapselayer.org/api/mcp`
 
-Synapse Layer is the State Continuity Layer for AI agents.
-Built for beta use. Designed for LGPD/GDPR alignment. Apache 2.0.
+Apache 2.0 © Synapse Layer
