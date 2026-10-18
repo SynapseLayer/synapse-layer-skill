@@ -1,6 +1,6 @@
 {
   "name": "synapse-layer",
-  "version": "2.3.7",
+  "version": "2.4.6",
   "endpoint": "https://forge.synapselayer.org/mcp",
   "auth": {
     "type": "bearer",
