@@ -1,5 +1,5 @@
 ![PyPI](https://img.shields.io/pypi/v/synapse-layer)
-![License](https://img.shields.io/badge/license-Apache%202.0-blue)
+![License](https://img.shields.io/badge/license-MIT-blue)
 ![Status](https://img.shields.io/badge/status-beta-yellow)
 
 # Synapse Layer — Memory Skill
@@ -8,7 +8,7 @@
 
 **Persistent memory infrastructure for AI agents — AES-256-GCM encrypted at rest, semantic search, MCP-native.**
 
-Synapse Layer is open-source persistent memory infrastructure for AI agents and assistants. Memories are encrypted at rest with AES-256-GCM, indexed via pgvector HNSW for semantic recall, and exposed through MCP JSON-RPC for native integration with Claude, GPT, Gemini, and any MCP-compatible client. Apache 2.0 licensed.
+Synapse Layer is open-source persistent memory infrastructure for AI agents and assistants. Memories are encrypted at rest with AES-256-GCM, indexed via pgvector HNSW for semantic recall, and exposed through MCP JSON-RPC for native integration with Claude, GPT, Gemini, and any MCP-compatible client. MIT licensed.
 
 ---
 
@@ -42,6 +42,16 @@ Encrypted memory. Per-operation random IV.
 
 Get your token first:
 [forge.synapselayer.org](https://forge.synapselayer.org) → Dashboard → Connect
+
+### Claude Code
+
+```bash
+claude mcp add --transport http synapse-layer \
+  https://forge.synapselayer.org/api/mcp \
+  --header "x-connect-token: sk_connect_YOUR_TOKEN"
+```
+
+The URL is positional — `claude mcp add --transport http <name> <url>`. There is no `--url` flag.
 
 ### Claude Desktop
 
@@ -144,11 +154,11 @@ pip install synapse-layer
 ```
 
 ```python
-from synapse_memory.client import Synapse
+from synapse_layer import Synapse
 
 client = Synapse(token="sk_connect_YOUR_TOKEN")
 
-client.remember("User prefers concise technical responses")
+client.store("User prefers concise technical responses")
 
 results = client.recall("user preferences")
 for result in results:
@@ -164,7 +174,7 @@ for result in results:
 - Trust Quotient memory scoring
 - Header-first MCP auth
 - Designed for LGPD/GDPR alignment
-- Apache 2.0
+- MIT
 
 ---
 
@@ -181,7 +191,7 @@ for result in results:
 ## Production
 
 - Live MCP endpoint: `forge.synapselayer.org`
-- MCP tools: 5 active (`recall`, `save_to_synapse`, `process_text`, `search`, `health_check`)
+- MCP tools: 13 active (`recall`, `save_to_synapse`, `process_text`, `search`, `health_check`, `initialize_context`, `save_memory`, `store_memory`, `recall_memory`, `list_memories`, `memory_feedback`, `neural_handover`, `slo_report`)
 
 ---
 
@@ -203,4 +213,4 @@ for result in results:
 - Core Repo: [github.com/SynapseLayer/synapse-layer](https://github.com/SynapseLayer/synapse-layer)
 - MCP Endpoint: `https://forge.synapselayer.org/api/mcp`
 
-Apache 2.0 © Synapse Layer
+MIT © Synapse Layer

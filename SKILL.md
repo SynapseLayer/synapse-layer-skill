@@ -1,7 +1,7 @@
 ---
 name: synapse-layer
 description: Persistent memory infrastructure for AI agents
-version: "2.3.7"
+version: "2.4.6"
 author: Ismael Marchi
 tags: [memory, mcp, ai-agents, llm, typescript, cross-agent]
 ---
