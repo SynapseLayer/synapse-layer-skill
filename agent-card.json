@@ -3,7 +3,7 @@
   "description": "Persistent memory infrastructure for AI agents",
   "version": "2.4.6",
   "endpoint": "https://forge.synapselayer.org/mcp",
-  "capabilities": ["store_memory", "recall_memory", "list_memories"],
+  "capabilities": ["recall", "save_to_synapse", "process_text", "search", "health_check", "initialize_context", "list_memories", "memory_feedback", "neural_handover"],
   "auth": "bearer",
   "tq_enabled": true
 }
