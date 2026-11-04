@@ -1,0 +1,32 @@
+name: Validate manifests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate JSON
+        run: |
+          python -m json.tool synapse.json >/dev/null
+          python -m json.tool agent-card.json >/dev/null
+          python -m json.tool composio.json >/dev/null
+      - name: Check alignment
+        run: |
+          python - <<'EOF'
+          import json
+          s = json.load(open("synapse.json"))
+          a = json.load(open("agent-card.json"))
+          c = json.load(open("composio.json"))
+          assert s["endpoint"] == "https://forge.synapselayer.org/api/mcp", s["endpoint"]
+          assert s["version"] == a["version"] == c["version"], "version drift"
+          assert len(s["tools"]) == 13, len(s["tools"])
+          print("manifests aligned")
+          EOF

@@ -8,7 +8,7 @@
 
 **Persistent memory infrastructure for AI agents — AES-256-GCM encrypted at rest, semantic search, MCP-native.**
 
-Synapse Layer is open-source persistent memory infrastructure for AI agents and assistants. Memories are encrypted at rest with AES-256-GCM, indexed via pgvector HNSW for semantic recall, and exposed through MCP JSON-RPC for native integration with Claude, GPT, Gemini, and any MCP-compatible client. MIT licensed.
+Synapse Layer is open-source persistent memory infrastructure for AI agents and assistants. Memories are encrypted at rest with AES-256-GCM, indexed via pgvector HNSW for semantic recall, and exposed through MCP JSON-RPC for native integration with Claude, GPT, Gemini, and any MCP-compatible client. This skill repository is MIT-licensed; the Synapse Layer core and hosted service are Apache-2.0.
 
 ---
 
@@ -173,8 +173,9 @@ for result in results:
 - Per-operation random IV
 - Trust Quotient memory scoring
 - Header-first MCP auth
-- Designed for LGPD/GDPR alignment
-- MIT
+- Server-side decryption — not zero-knowledge
+- Designed for LGPD/GDPR alignment (not a certification)
+- MIT (this repository)
 
 ---
 
@@ -207,6 +208,7 @@ for result in results:
 
 ## Links
 
+- Claims & limits: [FEATURES.md](https://github.com/SynapseLayer/synapse-layer/blob/main/FEATURES.md)
 - Website: [synapselayer.org](https://synapselayer.org)
 - Forge (Dashboard): [forge.synapselayer.org](https://forge.synapselayer.org)
 - PyPI: [pypi.org/project/synapse-layer](https://pypi.org/project/synapse-layer/)
